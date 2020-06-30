@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  module-product-golang
+  
+  Sample SAM Template for module-product-golang
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  PingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/ping
+      Handler: ping
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /ping
+            Method: GET
+  CategoryFetchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/categories/fetch/
+      Handler: fetch
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /categories
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: VALUE
+  ProductDeleteByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/products/delete-by-id
+      Handler: delete-by-id
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /products/{productID}
+            Method: DELETE
+  ProductUpdateByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/products/update-by-id
+      Handler: update-by-id
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /products/{productID}
+            Method: PUT
+  ProductFetchByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/products/fetch-by-id
+      Handler: fetch-by-id
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /products/{productID}
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: VALUE
+  ProductFetchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/products/fetch/
+      Handler: fetch
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /products
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: VALUE
+  ProductStoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/products/store/
+      Handler: store
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /products
+            Method: POST
+      Environment:
+        Variables:
+          PARAM1: VALUE
